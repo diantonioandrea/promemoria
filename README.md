@@ -30,10 +30,94 @@ python3 -m pip install --upgrade promemoria
 
 ### Show the list of reminders
 
+By simply calling `promemoria`[^1] you'll have:
+
+[^1]: Shouldn't this work, you can call **promemoria** by `python3 -m promemoria`.
+
+```
+[promemoria]
+
+You have 1 reminder(s).
+-----------------------
+
+◯ [1] New reminder !!
+      Empty reminder for test purposes.
+      Due: 2023-07-10
+
+------------
+0 completed.
+```
+
 ### Create a new reminder
+
+The command for creating a new reminder is the following:
+
+```
+promemoria new -t "TITLE" -de "DESCRIPTION" -da "DATE" -p PRIORITY
+```
+
+and an example would be:
+
+```
+promemoria new -t "Christmas" -de "It's Christmas!" -da "2023-12-25" -p 3
+```
+
+which would result in
+
+```
+[promemoria]
+
+Reminder created succesfully!
+
+◯ Christmas !!!
+  It's Christmas!
+  Due: 2023-12-25
+```
 
 ### Delete every reminder
 
+By
+
+```
+promemoria clear
+```
+
+you'll delete every reminder.
+
+```
+[promemoria]
+
+Your reminders have been deleted.
+```
+
 ### Delete a specific reminder
 
+By 
+
+```
+promemoria delete -i INDEX
+```
+
+you'll be able to delete the i-th reminder in your list.
+
 ### Toggle a reminder
+
+By 
+
+```
+promemoria toggle -i INDEX
+```
+
+you'll be able to toggle the i-th reminder in your list.
+
+By calling `promemoria toggle -i 1` on the *Christmas* reminder created before:
+
+```
+[promemoria]
+
+● ̶C̶h̶r̶i̶s̶t̶m̶a̶s !!!
+  It's Christmas!
+  Due: 2023-12-25
+```
+
+the reminder gets toggled and its title gets striked.

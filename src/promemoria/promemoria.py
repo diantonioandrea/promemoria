@@ -92,7 +92,7 @@ class reminder:
 
         # Finally returns string.
         return string
-    
+
     def toggle(self: reminder) -> None:
         """
         Toggles itself.

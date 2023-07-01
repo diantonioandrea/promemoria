@@ -18,6 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project.scripts]
+promemoria = "promemoria:main"
+
 [project.urls]
 "Homepage" = "https://github.com/diantonioandrea/promemoria"
 "Bug Tracker" = "https://github.com/diantonioandrea/promemoria/issues"
