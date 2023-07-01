@@ -7,7 +7,7 @@ from .utilities import parser, valiDate
 
 
 class reminder:
-    def __init__(self: reminder, prompt: list[str]):
+    def __init__(self: reminder, prompt: list[str], old: reminder = None):
         _, sdOpts, _ = parser(prompt)
 
         try:
