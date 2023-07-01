@@ -20,5 +20,4 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/diantonioandrea/promemoria"
-"Documentation" = "https://github.com/diantonioandrea/promemoria"
 "Bug Tracker" = "https://github.com/diantonioandrea/promemoria/issues"
