@@ -45,7 +45,7 @@ def help() -> str:
     cmdToggle += Style.DIM + "index, integer." + Style.RESET_ALL
 
     # clear.
-    cmdClear: str = Style.BRIGHT + "toggle " + Style.RESET_ALL
+    cmdClear: str = Style.BRIGHT + "clear " + Style.RESET_ALL
     cmdClear += Style.DIM + "Deletes every reminder" + Style.RESET_ALL
 
     # Full help.
