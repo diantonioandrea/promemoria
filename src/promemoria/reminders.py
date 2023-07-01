@@ -43,6 +43,16 @@ class reminder:
             else:
                 self.date = ""
 
+            # Checks time.
+            if "ti" in sdOpts:
+                assert isinstance(sdOpts["ti"], str)
+
+                # To be formatted.
+                self.time: str = sdOpts["ti"]
+
+            else:
+                self.time = ""
+
             self.dismissed: bool = False
             self.confirmation: bool = True
 
@@ -85,8 +95,9 @@ class reminder:
             string += "\n" + spaces + description
 
         # Date.
-        if self.date:
-            date = Fore.CYAN + self.date + Fore.RESET
+        if self.date or self.time:
+            date = Fore.CYAN + self.date + "{}{}" + Fore.RESET
+            date = date.format(" " if self.date else "", self.time)
 
             string += "\n" + spaces + date
 

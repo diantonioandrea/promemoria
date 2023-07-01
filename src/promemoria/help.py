@@ -24,6 +24,9 @@ def help() -> str:
     cmdNew += "\n" + spaces + Style.BRIGHT + "-da " + Style.RESET_ALL
     cmdNew += Style.DIM + "date, string." + Style.RESET_ALL
 
+    cmdNew += "\n" + spaces + Style.BRIGHT + "-ti " + Style.RESET_ALL
+    cmdNew += Style.DIM + "time, string." + Style.RESET_ALL
+
     cmdNew += "\n" + spaces + Style.BRIGHT + "-p " + Style.RESET_ALL
     cmdNew += Style.DIM + "priority, integer, [1-3]." + Style.RESET_ALL
 
