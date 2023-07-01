@@ -68,6 +68,9 @@ class reminder:
             self.dismissed: bool = False
             self.confirmation: bool = True
 
+            # Post-creation check.
+            self.check()
+
             message = "Reminder created succesfully!"
 
         except AssertionError:
