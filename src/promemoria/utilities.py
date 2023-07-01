@@ -54,7 +54,7 @@ def parser(prompt: list[str]) -> tuple[list[str], dict[str, str], list[str]]:
 
                 except ValueError:
                     pass
-                
+
                 # Risks IndexError.
                 try:
                     sdOpts[entry.replace("-", "", 1)] = strToNum(prompt[j + 1])

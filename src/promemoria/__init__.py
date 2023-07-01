@@ -35,7 +35,7 @@ def main() -> None:
 
     # Application name.
     print(Style.BRIGHT + "[promemoria]" + Style.RESET_ALL + "\n")
-    
+
     # Helper.
     if "help" in instructions:
         print(help())
@@ -60,7 +60,7 @@ def main() -> None:
         if index < 0:
             print(Fore.RED + "Syntax error." + Style.RESET_ALL)
             return -1
-        
+
         message = "You have deleted a reminder."
 
         print(message)
@@ -94,7 +94,7 @@ def main() -> None:
         # Get printable reminders.
         if "all" not in ddOpts:
             printable = [rem for rem in reminders if not rem.dismissed]
-        
+
         else:
             printable = reminders.copy()
 
