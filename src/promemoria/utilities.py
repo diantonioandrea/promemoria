@@ -1,11 +1,3 @@
-def strike(string: str) -> str:
-    """
-    Returns the strikethrough version of a string.
-    """
-
-    return "".join(["\u0336{}".format(c) for c in string])
-
-
 def strToNum(string: str) -> "int, float, str":
     """
     Optionally converts a string to a number.

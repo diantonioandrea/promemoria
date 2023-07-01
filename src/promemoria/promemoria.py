@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from colorama import Fore, Style
 
-from .utilities import strike, parser
+from .utilities import parser
 
 
 class reminder:
@@ -65,7 +65,7 @@ class reminder:
         # Title.
         # Striked on dismissed reminders.
         if self.dismissed:
-            title = strike(self.title)
+            title = Style.DIM + self.title + Style.RESET_ALL
 
         else:
             title = Style.BRIGHT + self.title + Style.RESET_ALL
@@ -88,7 +88,7 @@ class reminder:
         if self.date:
             date = Fore.CYAN + self.date + Fore.RESET
 
-            string += "\n" + spaces + "Due: " + date
+            string += "\n" + spaces + date
 
         # Finally returns string.
         return string
