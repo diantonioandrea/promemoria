@@ -32,9 +32,7 @@ def getReminders() -> list[reminder]:
     except FileNotFoundError:
         reminders: list[reminder] = []
 
-        file = open(path + "reminders.pickle", "wb")
-        pickle.dump(reminders, file)
-        file.close()
+        saveReminders(reminders)
 
     return reminders
 
