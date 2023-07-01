@@ -5,7 +5,7 @@ from colorama import Fore, Style, init
 
 from .help import help
 from .files import getReminders, saveReminders
-from .promemoria import reminder
+from .reminders import reminder
 from .utilities import parser
 
 # Colorama's initialization.

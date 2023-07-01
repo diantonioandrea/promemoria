@@ -3,7 +3,7 @@
 from os import makedirs
 from os.path import expanduser
 
-from .promemoria import reminder
+from .reminders import reminder
 import pickle
 
 
