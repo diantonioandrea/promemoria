@@ -18,3 +18,22 @@ Intuitive Python based tool to create reminders in the shell.
 
 **promemoria** is a Python based tool to help you stay organized and on top of your tasks! Quickly *create reminders in the shell* with the ability to *set a title, description, priority and date* to make sure you never forget anything.
 
+## Installation
+
+**promemoria** can be installed from [PyPI](https://pypi.org) by:
+
+```
+python3 -m pip install --upgrade promemoria
+```
+
+## Usage
+
+### Show the list of reminders
+
+### Create a new reminder
+
+### Delete every reminder
+
+### Delete a specific reminder
+
+### Toggle a reminder
