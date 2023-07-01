@@ -42,7 +42,7 @@ class reminder:
             if "da" in sdOpts:
                 assert isinstance(sdOpts["da"], str)
                 assert valiDate(sdOpts["da"])
-                
+
                 # Date.
                 self.date: str = sdOpts["da"]
 
@@ -63,6 +63,8 @@ class reminder:
             else:
                 self.time = ""
 
+            # Flags.
+            self.expired = False
             self.dismissed: bool = False
             self.confirmation: bool = True
 
@@ -109,13 +111,25 @@ class reminder:
 
         # Date.
         if self.date or self.time:
-            date = Fore.CYAN + self.date + "{}{}" + Fore.RESET
+            date: str = Fore.GREEN if not self.expired else Fore.RED
+            date += self.date + "{}{}" + Fore.RESET
             date = date.format(" " if self.date else "", self.time)
 
             string += "\n" + spaces + date
 
         # Finally returns string.
         return string
+
+    def check(self: reminder) -> None:
+        if self.date:
+            date = datetime.strptime(self.date, "%Y-%m-%d")
+            now = datetime.now()
+
+            if date < now:
+                self.expired = True
+
+            else:
+                self.expired = False
 
     def toggle(self: reminder) -> None:
         """
