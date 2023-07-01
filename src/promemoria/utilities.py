@@ -1,3 +1,17 @@
+from datetime import datetime
+
+
+def valiDate(date: str, string: str = "%Y-%m-%d") -> bool:
+    try:
+        if date != datetime.strptime(date, string).strftime(string):
+            raise ValueError
+
+        return True
+
+    except ValueError:
+        return False
+
+
 def strToNum(string: str) -> "int, float, str":
     """
     Optionally converts a string to a number.

@@ -22,7 +22,7 @@ def help() -> str:
     cmdNew += Style.DIM + "description, string. " + Style.RESET_ALL
 
     cmdNew += "\n" + spaces + Style.BRIGHT + "-da " + Style.RESET_ALL
-    cmdNew += Style.DIM + "date, string." + Style.RESET_ALL
+    cmdNew += Style.DIM + "date, string, ISO 8601 compliant." + Style.RESET_ALL
 
     cmdNew += "\n" + spaces + Style.BRIGHT + "-ti " + Style.RESET_ALL
     cmdNew += Style.DIM + "time, string." + Style.RESET_ALL

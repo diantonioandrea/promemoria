@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from datetime import datetime
 from colorama import Fore, Style
 
-from .utilities import parser
+from .utilities import parser, valiDate
 
 
 class reminder:
@@ -12,6 +13,8 @@ class reminder:
         try:
             # Checks title.
             assert "t" in sdOpts
+
+            # Title.
             self.title: str = sdOpts["t"]
 
             # Checks priority.
@@ -19,6 +22,7 @@ class reminder:
                 assert isinstance(sdOpts["p"], int)
                 assert 1 <= sdOpts["p"] <= 3
 
+                # Priority.
                 self.priority: int = sdOpts["p"]
 
             else:
@@ -28,6 +32,7 @@ class reminder:
             if "de" in sdOpts:
                 assert isinstance(sdOpts["de"], str)
 
+                # Description.
                 self.description: str = sdOpts["de"]
 
             else:
@@ -36,8 +41,9 @@ class reminder:
             # Checks date.
             if "da" in sdOpts:
                 assert isinstance(sdOpts["da"], str)
-
-                # To be formatted.
+                assert valiDate(sdOpts["da"])
+                
+                # Date.
                 self.date: str = sdOpts["da"]
 
             else:
@@ -46,8 +52,12 @@ class reminder:
             # Checks time.
             if "ti" in sdOpts:
                 assert isinstance(sdOpts["ti"], str)
+                assert valiDate(sdOpts["ti"], "%H:%M")
 
-                # To be formatted.
+                if not self.date:
+                    self.date = datetime.now().strftime("%Y-%m-%d")
+
+                # Time.
                 self.time: str = sdOpts["ti"]
 
             else:
@@ -56,11 +66,14 @@ class reminder:
             self.dismissed: bool = False
             self.confirmation: bool = True
 
-            print("Reminder created succesfully!")
+            message = "Reminder created succesfully!"
 
         except AssertionError:
-            print("Reminder creation failed!\nCheck your prompt.")
+            message = "Reminder creation failed!"
             self.confirmation: bool = False
+
+        print(message)
+        print("-" * len(message))
 
     def __str__(self: reminder, index: int = -1) -> str:
         # Mark.
