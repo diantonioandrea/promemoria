@@ -11,8 +11,15 @@ def help() -> str:
     introduction: str = "Available commands."
     introduction += "\n" + "-" * len(introduction)
 
+    # Empty command.
+    cmd: str = Style.BRIGHT + "promemoria " + Style.RESET_ALL
+    cmd += Style.DIM + "Shows the list of active reminders." + Style.RESET_ALL
+
+    cmd += "\n" + spaces + Style.BRIGHT + "--all " + Style.RESET_ALL
+    cmd += Style.DIM + "Shows every reminder." + Style.RESET_ALL
+
     # new.
-    cmdNew: str = Style.BRIGHT + "new " + Style.RESET_ALL
+    cmdNew: str = Style.BRIGHT + "promemoria new " + Style.RESET_ALL
     cmdNew += Style.DIM + "Creates a new reminder" + Style.RESET_ALL
 
     cmdNew += "\n" + spaces + Fore.RED + Style.BRIGHT + "-t " + Style.RESET_ALL
@@ -31,23 +38,23 @@ def help() -> str:
     cmdNew += Style.DIM + "priority, integer, [1-3]." + Style.RESET_ALL
 
     # delete.
-    cmdDelete: str = Style.BRIGHT + "delete " + Style.RESET_ALL
+    cmdDelete: str = Style.BRIGHT + "promemoria delete " + Style.RESET_ALL
     cmdDelete += Style.DIM + "Deletes the specified reminder" + Style.RESET_ALL
 
     cmdDelete += "\n" + spaces + Fore.RED + Style.BRIGHT + "-i " + Style.RESET_ALL
     cmdDelete += Style.DIM + "index, integer." + Style.RESET_ALL
 
     # toggle.
-    cmdToggle: str = Style.BRIGHT + "toggle " + Style.RESET_ALL
+    cmdToggle: str = Style.BRIGHT + "promemoria toggle " + Style.RESET_ALL
     cmdToggle += Style.DIM + "Toggles the specified reminder" + Style.RESET_ALL
 
     cmdToggle += "\n" + spaces + Fore.RED + Style.BRIGHT + "-i " + Style.RESET_ALL
     cmdToggle += Style.DIM + "index, integer." + Style.RESET_ALL
 
     # clear.
-    cmdClear: str = Style.BRIGHT + "clear " + Style.RESET_ALL
+    cmdClear: str = Style.BRIGHT + "promemoria clear " + Style.RESET_ALL
     cmdClear += Style.DIM + "Deletes every reminder" + Style.RESET_ALL
 
     # Full help.
-    entries: list[str] = [introduction, cmdNew, cmdDelete, cmdToggle, cmdClear]
+    entries: list[str] = [introduction, cmd, cmdNew, cmdDelete, cmdToggle, cmdClear]
     return "\n\n".join(entries)
