@@ -126,10 +126,23 @@ class reminder:
     def check(self: reminder) -> None:
         if self.date:
             date = datetime.strptime(self.date, "%Y-%m-%d")
+
+            if self.time:
+                time = datetime.strptime(self.time, "%H:%M")
+
             now = datetime.now()
 
+            # Checks expiration.
             if date < now:
-                self.expired = True
+                if self.time:
+                    if time.hour <= now.hour and time.minute < now.minute:
+                        self.expired = True
+
+                    else:
+                        self.expired = False
+
+                else:
+                    self.expired = True
 
             else:
                 self.expired = False

@@ -59,7 +59,7 @@ promemoria new -t "TITLE" -de "DESCRIPTION" -da "DATE" -p PRIORITY
 and an example would be:
 
 ```
-promemoria new -t "Christmas" -de "It's Christmas!" -da "2023-12-25" -p 3
+promemoria new -t "Christmas" -de "It's Christmas\!" -da "2023-12-25" -p 3
 ```
 
 which would result in
