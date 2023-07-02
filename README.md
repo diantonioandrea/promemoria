@@ -64,6 +64,24 @@ promemoria clear Deletes every reminder
 
 ## Examples
 
+### Quickly check your reminders
+
+```
+promemoria
+```
+
+which results in:
+
+```
+[promemoria]
+
+You have 1 reminder(s).
+-----------------------
+
+◯ [1] Go get some groceries. !
+      2023-07-12 08:30
+```
+
 ### Creating a reminder
 
 ```
