@@ -1,9 +1,15 @@
-def strike(string: str) -> str:
-    """
-    Returns the strikethrough version of a string.
-    """
+from datetime import datetime
 
-    return "".join(["\u0336{}".format(c) for c in string])
+
+def valiDate(date: str, string: str = "%Y-%m-%d") -> bool:
+    try:
+        if date != datetime.strptime(date, string).strftime(string):
+            raise ValueError
+
+        return True
+
+    except ValueError:
+        return False
 
 
 def strToNum(string: str) -> "int, float, str":
@@ -63,8 +69,13 @@ def parser(prompt: list[str]) -> tuple[list[str], dict[str, str], list[str]]:
                 except ValueError:
                     pass
 
-                sdOpts[entry.replace("-", "", 1)] = strToNum(prompt[j + 1])
-                sdSkip = True
+                # Risks IndexError.
+                try:
+                    sdOpts[entry.replace("-", "", 1)] = strToNum(prompt[j + 1])
+                    sdSkip = True
+
+                except IndexError:
+                    pass
 
                 continue
 

@@ -1,17 +1,20 @@
 from __future__ import annotations
 
+from datetime import datetime
 from colorama import Fore, Style
 
-from .utilities import strike, parser
+from .utilities import parser, valiDate
 
 
 class reminder:
-    def __init__(self: reminder, prompt: list[str]):
+    def __init__(self: reminder, prompt: list[str], old: reminder = None):
         _, sdOpts, _ = parser(prompt)
 
         try:
             # Checks title.
             assert "t" in sdOpts
+
+            # Title.
             self.title: str = sdOpts["t"]
 
             # Checks priority.
@@ -19,6 +22,7 @@ class reminder:
                 assert isinstance(sdOpts["p"], int)
                 assert 1 <= sdOpts["p"] <= 3
 
+                # Priority.
                 self.priority: int = sdOpts["p"]
 
             else:
@@ -28,6 +32,7 @@ class reminder:
             if "de" in sdOpts:
                 assert isinstance(sdOpts["de"], str)
 
+                # Description.
                 self.description: str = sdOpts["de"]
 
             else:
@@ -36,21 +41,44 @@ class reminder:
             # Checks date.
             if "da" in sdOpts:
                 assert isinstance(sdOpts["da"], str)
+                assert valiDate(sdOpts["da"])
 
-                # To be formatted.
+                # Date.
                 self.date: str = sdOpts["da"]
 
             else:
                 self.date = ""
 
+            # Checks time.
+            if "ti" in sdOpts:
+                assert isinstance(sdOpts["ti"], str)
+                assert valiDate(sdOpts["ti"], "%H:%M")
+
+                if not self.date:
+                    self.date = datetime.now().strftime("%Y-%m-%d")
+
+                # Time.
+                self.time: str = sdOpts["ti"]
+
+            else:
+                self.time = ""
+
+            # Flags.
+            self.expired = False
             self.dismissed: bool = False
             self.confirmation: bool = True
 
-            print("Reminder created succesfully!")
+            # Post-creation check.
+            self.check()
+
+            message = "Reminder created succesfully!"
 
         except AssertionError:
-            print("Reminder creation failed!\nCheck your prompt.")
+            message = "Reminder creation failed!"
             self.confirmation: bool = False
+
+        print(message)
+        print("-" * len(message))
 
     def __str__(self: reminder, index: int = -1) -> str:
         # Mark.
@@ -65,7 +93,7 @@ class reminder:
         # Title.
         # Striked on dismissed reminders.
         if self.dismissed:
-            title = strike(self.title)
+            title = Style.DIM + self.title + Style.RESET_ALL
 
         else:
             title = Style.BRIGHT + self.title + Style.RESET_ALL
@@ -85,13 +113,39 @@ class reminder:
             string += "\n" + spaces + description
 
         # Date.
-        if self.date:
-            date = Fore.CYAN + self.date + Fore.RESET
+        if self.date or self.time:
+            date: str = Fore.GREEN if not self.expired else Fore.RED
+            date += self.date + "{}{}" + Fore.RESET
+            date = date.format(" " if self.date else "", self.time)
 
-            string += "\n" + spaces + "Due: " + date
+            string += "\n" + spaces + date
 
         # Finally returns string.
         return string
+
+    def check(self: reminder) -> None:
+        if self.date:
+            date = datetime.strptime(self.date, "%Y-%m-%d")
+
+            if self.time:
+                time = datetime.strptime(self.time, "%H:%M")
+
+            now = datetime.now()
+
+            # Checks expiration.
+            if date < now:
+                if self.time:
+                    if time.hour <= now.hour and time.minute < now.minute:
+                        self.expired = True
+
+                    else:
+                        self.expired = False
+
+                else:
+                    self.expired = True
+
+            else:
+                self.expired = False
 
     def toggle(self: reminder) -> None:
         """

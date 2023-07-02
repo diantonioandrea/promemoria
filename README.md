@@ -28,11 +28,49 @@ python3 -m pip install --upgrade promemoria
 
 ## Usage
 
-### Show the list of reminders
+**promemoria** features a small and simple-to-use set of commands.  
+These commands can be easily retrieved at any moment by issuing `promemoria help`[^1][^2][^3]
 
-By simply calling `promemoria`[^1] you'll have:
+[^1]: Shouldn't `promemoria` work, try `python3 -m promemoria`.
 
-[^1]: Shouldn't this work, you can call **promemoria** by `python3 -m promemoria`.
+[^2]: A color coded output will serve you better than this example.
+
+[^3]: Referring to version 1.1.0
+
+```
+[promemoria]
+
+Available commands.
+-------------------
+
+promemoria Shows the list of active reminders
+    --all Shows every reminder.
+
+promemoria new Creates a new reminder
+    -t title, string.
+    -de description, string. 
+    -da date, string, ISO 8601 compliant.
+    -ti time, string.
+    -p priority, integer, [1-3].
+
+promemoria delete Deletes the specified reminder
+    -i index, integer.
+
+promemoria toggle Toggles the specified reminder
+    -i index, integer.
+
+promemoria clear Deletes every reminder
+```
+
+## Examples
+
+### Quickly check your reminders
+
+```
+promemoria
+```
+
+which results in:
 
 ```
 [promemoria]
@@ -40,84 +78,46 @@ By simply calling `promemoria`[^1] you'll have:
 You have 1 reminder(s).
 -----------------------
 
-◯ [1] New reminder !!
-      Empty reminder for test purposes.
-      Due: 2023-07-10
-
-------------
-0 completed.
+◯ [1] Go get some groceries. !
+      2023-07-12 08:30
 ```
 
-### Create a new reminder
-
-The command for creating a new reminder is the following:
+### Creating a reminder
 
 ```
-promemoria new -t "TITLE" -de "DESCRIPTION" -da "DATE" -p PRIORITY
+promemoria new -t "Christmas" -de "It's Christmas\!" -da "2023-12-25" -p 3
 ```
 
-and an example would be:
-
-```
-promemoria new -t "Christmas" -de "It's Christmas!" -da "2023-12-25" -p 3
-```
-
-which would result in
+which results in:
 
 ```
 [promemoria]
 
 Reminder created succesfully!
+-----------------------------
 
 ◯ Christmas !!!
   It's Christmas!
-  Due: 2023-12-25
+  2023-12-25
 ```
 
-### Delete every reminder
-
-By
+### Toggling a reminder
 
 ```
-promemoria clear
-```
+promemoria toggle -i 1
+````
 
-you'll delete every reminder.
+which results[^2][^4] in:
 
-```
-[promemoria]
-
-Your reminders have been deleted.
-```
-
-### Delete a specific reminder
-
-By 
-
-```
-promemoria delete -i INDEX
-```
-
-you'll be able to delete the i-th reminder in your list.
-
-### Toggle a reminder
-
-By 
-
-```
-promemoria toggle -i INDEX
-```
-
-you'll be able to toggle the i-th reminder in your list.
-
-By calling `promemoria toggle -i 1` on the *Christmas* reminder created before:
+[^4]: The mark changes and the title gets dimmed.
 
 ```
 [promemoria]
 
-● ̶C̶h̶r̶i̶s̶t̶m̶a̶s !!!
+You toggled a reminder.
+-----------------------
+
+● Christmas !!!
   It's Christmas!
-  Due: 2023-12-25
+  2023-12-25
 ```
-
-the reminder gets toggled and its title gets striked.
