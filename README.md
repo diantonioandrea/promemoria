@@ -29,11 +29,13 @@ python3 -m pip install --upgrade promemoria
 ## Usage
 
 **promemoria** features a small and simple-to-use set of commands.  
-These commands can be easily retrieved at any moment by issuing `promemoria help`[^1][^2]
+These commands can be easily retrieved at any moment by issuing `promemoria help`[^1][^2][^3]
 
 [^1]: Shouldn't `promemoria` work, try `python3 -m promemoria`.
 
 [^2]: A color coded output will serve you better than this example.
+
+[^3]: Referring to version 1.1.0
 
 ```
 [promemoria]
@@ -62,7 +64,7 @@ promemoria clear Deletes every reminder
 
 ## Examples
 
-### Create a reminder
+### Creating a reminder
 
 ```
 promemoria new -t "Christmas" -de "It's Christmas\!" -da "2023-12-25" -p 3
@@ -87,7 +89,7 @@ Reminder created succesfully!
 promemoria toggle -i 1
 ````
 
-which results in:
+which results[^2] in:
 
 ```
 [promemoria]
