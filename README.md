@@ -89,7 +89,9 @@ Reminder created succesfully!
 promemoria toggle -i 1
 ````
 
-which results[^2] in:
+which results[^2][^4] in:
+
+[^4]: The mark changes and the title gets dimmed.
 
 ```
 [promemoria]
