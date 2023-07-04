@@ -34,6 +34,9 @@ def getReminders() -> list[reminder]:
 
         saveReminders(reminders)
 
+    except:
+        reminders = []
+
     # Runs a check on reminders.
     for rem in reminders:
         rem.check()
