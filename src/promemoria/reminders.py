@@ -91,10 +91,10 @@ class reminder:
                 # Post-creation check.
                 self.check()
 
-                message = "Reminder created succesfully!"
+                message = "Reminder created succesfully."
 
             except AssertionError:
-                message = "Reminder creation failed!"
+                message = "Reminder creation failed."
                 self.confirmation: bool = False
 
             msg(message)

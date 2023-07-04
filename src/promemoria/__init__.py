@@ -125,7 +125,7 @@ def main() -> None:
                 print("\n" + rem.__str__(pIndex + 1))
 
         else:
-            print("Nothing to show.")
+            msg("Nothing to show.")
 
         if "all" in ddOpts:
             # Prints the number of completed reminders.

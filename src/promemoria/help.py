@@ -8,7 +8,7 @@ def help() -> str:
     Returns the help string.
     """
     spaces = " " * 4
-    introduction: str = "Available commands."
+    introduction: str = "Base commands."
     introduction += "\n" + "-" * len(introduction)
 
     # Empty command.
