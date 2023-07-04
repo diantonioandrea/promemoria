@@ -112,11 +112,11 @@ def main() -> None:
     # No reminders.
     elif not len(reminders):
         hintNew = Style.BRIGHT + "promemoria new -t 'TITLE' ..." + Style.RESET_ALL
-        hintGit = Style.BRIGHT + "promemoria gh -r 'REPO' ..." + Style.RESET_ALL
+        hintGit = Style.BRIGHT + "promemoria gh -r 'USER/REPO' ..." + Style.RESET_ALL
 
         print("You have no reminders.\n")
         print("Try creating one using " + hintNew)
-        print("or import one using " + hintGit)
+        print("or import some using " + hintGit)
 
     # Shows reminders by default.
     else:

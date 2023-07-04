@@ -1,6 +1,7 @@
 # Imports Contents from a specific repo as reminders.
 
 import requests
+
 from .reminders import reminder
 from .utilities import parser
 
@@ -12,37 +13,48 @@ def gitContents(prompt: list[str]) -> tuple[bool, list[reminder]]:
 
     _, sdOpts, ddOpts = parser(prompt)
 
-    if "r" not in sdOpts:
-        return False, []
-
     try:
+        assert "r" in sdOpts
+        assert isinstance(sdOpts["r"], str)
+        assert "/" in sdOpts["r"] and len(sdOpts["r"]) >= 3
+
+        if "u" in sdOpts:
+            assert isinstance(sdOpts["u"], str)
+            assert len(sdOpts["u"])
+
+        repo = sdOpts["r"]
+        content = "pulls" if "pulls" in ddOpts else "issues"
+
         url: str = "https://api.github.com/repos/{}/{}"
+        url = url.format(repo, content)
 
-        if "pulls" in ddOpts:
-            url = url.format(sdOpts["r"], "pulls")
+        contents: list = requests.get(url).json()
 
-        else:
-            url = url.format(sdOpts["r"], "issues")
+        # contents might be of type 'dict' on errors.
+        assert isinstance(contents, list)
 
     except:  # This should be avoided.
         return False, []
 
-    contents: dict = requests.get(url).json()
     reminders: list[reminder] = []
 
     for content in contents:
         gitContent: dict[str, str] = {}
         gitContent["title"] = content["title"]
-        gitContent["description"] = content["url"]
+        gitContent["description"] = repo
 
         if "u" not in sdOpts:
             reminders.append(reminder(gitContent, True))
 
-        # Checks assignee.
+        # Checks assignee or requested reviewer on pulls.
         else:
-            for assignee in content["assignees"]:
-                if assignee["login"] == sdOpts["u"]:
-                    reminders.append(reminder(gitContent, True))
-                    break
+            gitContent["description"] += ":" + sdOpts["u"]
+            search = content["assignees"]
+
+            if "pulls" in ddOpts:
+                search += content["requested_reviewers"]
+
+            if sdOpts["u"] in [user["login"] for user in search]:
+                reminders.append(reminder(gitContent, True))
 
     return True, reminders

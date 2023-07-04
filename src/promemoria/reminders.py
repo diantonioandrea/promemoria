@@ -10,6 +10,9 @@ from .utilities import parser, valiDate
 class reminder:
     def __init__(self: reminder, prompt: "list, dict", git: bool = False):
         if git:
+            # Create a reminder from a git issue or pull request.
+            # prompt: dict[str, str]
+
             self.title = prompt["title"]
             self.description = prompt["description"]
 
@@ -23,6 +26,9 @@ class reminder:
 
         else:
             try:
+                # Create a reminder 'from scratch'.
+                # prompt: list[str]
+
                 _, sdOpts, _ = parser(prompt)
 
                 # Checks title.
