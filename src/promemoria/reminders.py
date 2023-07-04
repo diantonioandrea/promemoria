@@ -81,15 +81,15 @@ class reminder:
         print(message)
         print("-" * len(message))
 
-    def __init__(self: reminder, gitIssues: dict[str, str]) -> None:
+    def __init__(self: reminder, gitIssue: dict[str, str]) -> None:
         """
         Initializes from a GitHub Issue.
         """
 
-        self.title = gitIssues["title"]
+        self.title = gitIssue["title"]
+        self.description = gitIssue["description"]
 
         self.priority = 1  # Default priority.
-        self.description = ""
         self.date = ""
         self.time = ""
 

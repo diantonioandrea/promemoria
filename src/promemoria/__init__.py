@@ -6,6 +6,7 @@ from .help import help
 from .files import getReminders, saveReminders
 from .reminders import reminder
 from .utilities import parser
+from .git import gitIssues
 
 # Colorama's initialization.
 init()
