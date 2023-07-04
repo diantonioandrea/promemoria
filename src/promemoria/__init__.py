@@ -70,7 +70,7 @@ def main() -> None:
                 print("\n" + str(git))
 
         else:
-            msg("Nothing imported.")
+            msg("An error occurred during import.", error=True)
 
     # Delete all reminders.
     elif "clear" in instructions:
@@ -81,7 +81,7 @@ def main() -> None:
     # Delete a reminder.
     elif "delete" in instructions:
         if index < 0:
-            msg("Syntax error.", error=True)
+            msg("Missing reminder index.", error=True)
             return -1
 
         msg("You have deleted a reminder.")
@@ -90,7 +90,7 @@ def main() -> None:
     # Toggle a reminder.
     elif "toggle" in instructions:
         if index < 0:
-            msg("Syntax error.", error=True)
+            msg("Missing reminder index.", error=True)
             return -1
 
         msg("You toggled a reminder.")
