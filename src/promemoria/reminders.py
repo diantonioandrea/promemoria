@@ -4,7 +4,7 @@ from datetime import datetime
 
 from colorama import Fore, Style
 
-from .utilities import parser, valiDate
+from .utilities import parser, valiDate, msg
 
 
 class reminder:
@@ -97,8 +97,7 @@ class reminder:
                 message = "Reminder creation failed!"
                 self.confirmation: bool = False
 
-            print(message)
-            print("-" * len(message))
+            msg(message)
 
     def __str__(self: reminder, index: int = -1) -> str:
         # Mark.

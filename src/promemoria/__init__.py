@@ -5,7 +5,7 @@ from colorama import Fore, Style, init
 from .help import help
 from .files import getReminders, saveReminders
 from .reminders import reminder
-from .utilities import parser
+from .utilities import parser, msg
 from .git import gitContents
 
 # Colorama's initialization.
@@ -61,20 +61,16 @@ def main() -> None:
 
             reminders += gits
 
-            msg: str = "Imported {} {}(s)."
-            msg = msg.format(len(gits), "issue" if "pulls" not in ddOpts else "pull")
-            msg += "\n" + "_" * len(msg)
-
-            print(msg)
+            string: str = "Imported {} {}(s)."
+            string = string.format(len(gits), "{}")
+            string = string.format("issue" if "pulls" not in ddOpts else "pull")
+            msg(string)
 
             for git in gits:
                 print("\n" + str(git))
 
         else:
-            msg: str = "Nothing imported."
-            msg += "\n" + "_" * len(msg)
-
-            print(msg)
+            msg("Nothing imported.")
 
     # Delete all reminders.
     elif "clear" in instructions:
@@ -85,27 +81,19 @@ def main() -> None:
     # Delete a reminder.
     elif "delete" in instructions:
         if index < 0:
-            print(Fore.RED + "Syntax error." + Style.RESET_ALL)
+            msg("Syntax error.", error=True)
             return -1
 
-        msg = "You have deleted a reminder."
-
-        print(msg)
-        print("-" * len(msg))
-
+        msg("You have deleted a reminder.")
         print("\n" + str(reminders.pop(index)))
 
     # Toggle a reminder.
     elif "toggle" in instructions:
         if index < 0:
-            print(Fore.RED + "Syntax error." + Style.RESET_ALL)
+            msg("Syntax error.", error=True)
             return -1
 
-        msg = "You toggled a reminder."
-
-        print(msg)
-        print("-" * len(msg))
-
+        msg("You toggled a reminder.")
         reminders[index].toggle()
         print("\n" + str(reminders[index]))
 
@@ -129,10 +117,7 @@ def main() -> None:
 
         # Print reminders, if any.
         if len(printable):
-            msg: str = "You have {} reminder(s).".format(len(printable))
-
-            print(msg)
-            print("-" * len(msg))
+            msg("You have {} reminder(s).".format(len(printable)))
 
             # Prints the list of reminders.
             for rem in printable:
@@ -145,10 +130,11 @@ def main() -> None:
         if "all" in ddOpts:
             # Prints the number of completed reminders.
             completed: int = [rem.dismissed for rem in reminders].count(True)
-            msg: str = "{} completed.".format(completed)
 
-            print("\n" + "-" * len(msg))
-            print(msg)
+            print()  # Needed space.
+            message = "{}/{} completed."
+            message = message.format(completed, len(reminders))
+            msg(message, reversed=True)
 
     # Saves reminders.
     saveReminders(reminders)
