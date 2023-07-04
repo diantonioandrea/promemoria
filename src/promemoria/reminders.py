@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+
 from colorama import Fore, Style
 
 from .utilities import parser, valiDate
@@ -64,7 +65,7 @@ class reminder:
                 self.time = ""
 
             # Flags.
-            self.expired = False
+            self.expired: bool = False
             self.dismissed: bool = False
             self.confirmation: bool = True
 
@@ -79,6 +80,21 @@ class reminder:
 
         print(message)
         print("-" * len(message))
+
+    def __init__(self: reminder, gitIssues: dict[str, str]) -> None:
+        """
+        Initializes from a GitHub Issue.
+        """
+
+        self.title = gitIssues["title"]
+
+        self.priority = 1  # Default priority.
+        self.description = ""
+        self.date = ""
+        self.time = ""
+
+        self.expired: bool = False
+        self.dismissed: bool = False
 
     def __str__(self: reminder, index: int = -1) -> str:
         # Mark.

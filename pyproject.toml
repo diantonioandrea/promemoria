@@ -4,14 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "promemoria"
-version = "1.1.0"
+version = "1.2.0"
 authors = [
   { name="Andrea Di Antonio", email="mail@diantonioandrea.com" },
 ]
 description = ""
 readme = "README.md"
 requires-python = ">=3.7"
-dependencies = ["colorama", "setuptools"]
+dependencies = ["colorama", "setuptools", "requests"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

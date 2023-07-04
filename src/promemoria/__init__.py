@@ -1,4 +1,3 @@
-import pickle
 import sys
 
 from colorama import Fore, Style, init
