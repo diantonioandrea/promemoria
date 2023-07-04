@@ -49,6 +49,27 @@ def main() -> None:
 
             print("\n" + str(newReminder))
 
+    # GitHub integration.
+    elif "gh" in instructions:
+        status, issues = gitIssues(sys.argv)
+
+        if status:
+            titles = [rem.title for rem in reminders]
+
+            # Try to avoid duplicates.
+            issues = [issue for issue in issues if issue.title not in titles]
+
+            reminders += issues
+
+            message: str = "Imported {} issue(s).".format(len(issues))
+            message += "\n" + "_" * len(message)
+
+        else:
+            message: str = "No issue imported."
+            message += "\n" + "_" * len(message)
+
+        print(message)
+
     # Delete all reminders.
     elif "clear" in instructions:
         reminders = []

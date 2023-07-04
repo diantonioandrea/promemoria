@@ -55,6 +55,27 @@ def help() -> str:
     cmdClear: str = Style.BRIGHT + "promemoria clear " + Style.RESET_ALL
     cmdClear += Style.DIM + "Deletes every reminder" + Style.RESET_ALL
 
+    # GitHub integration.
+    introductionGit: str = "GitHub integration."
+    introductionGit += "\n" + "-" * len(introductionGit)
+
+    # git.
+    cmdGit: str = Style.BRIGHT + "promemoria gh " + Style.RESET_ALL
+    cmdGit += Style.DIM + "Imports issues from GitHub" + Style.RESET_ALL
+
+    cmdGit += "\n" + spaces + Fore.RED + Style.BRIGHT + "-r " + Style.RESET_ALL
+    cmdGit += Style.DIM + "public repo, string [user/repo]." + Style.RESET_ALL
+
+    cmdGit += "\n" + spaces + Style.BRIGHT + "-u " + Style.RESET_ALL
+    cmdGit += Style.DIM + "user, string." + Style.RESET_ALL
+
+    cmdGit += "\n" + spaces + Style.BRIGHT + "--all " + Style.RESET_ALL
+    cmdGit += Style.DIM + "Imports every issue." + Style.RESET_ALL
+
     # Full help.
     entries: list[str] = [introduction, cmd, cmdNew, cmdDelete, cmdToggle, cmdClear]
+
+    # GitHub integration.
+    entries += [introductionGit, cmdGit]
+
     return "\n\n".join(entries)

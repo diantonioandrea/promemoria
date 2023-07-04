@@ -9,14 +9,18 @@ def gitIssues(prompt: list[str]) -> tuple[bool, list[reminder]]:
     """
     Returns a list of issues from a GitHub repo as reminders.
     """
-    
+
     _, sdOpts, ddOpts = parser(prompt)
 
     if "r" not in sdOpts or ("u" not in sdOpts and "all" not in ddOpts):
         return False, []
 
-    url: str = "https://api.github.com/repos/{}/issues"
-    url = url.format(sdOpts["r"])
+    try:
+        url: str = "https://api.github.com/repos/{}/issues"
+        url = url.format(sdOpts["r"])
+
+    except:  # This should be avoided.
+        return False, []
 
     issues: dict = requests.get(url).json()
     reminders: list[reminder] = []
@@ -24,7 +28,7 @@ def gitIssues(prompt: list[str]) -> tuple[bool, list[reminder]]:
     for issue in issues:
         gitIssue: dict[str, str] = {}
         gitIssue["title"] = issue["title"]
-        gitIssue["description"] = sdOpts["r"]
+        gitIssue["description"] = issue["url"]
 
         if "all" in ddOpts:
             reminders.append(reminder(gitIssue))
