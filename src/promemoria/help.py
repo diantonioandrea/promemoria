@@ -61,7 +61,9 @@ def help() -> str:
 
     # git.
     cmdGit: str = Style.BRIGHT + "promemoria gh " + Style.RESET_ALL
-    cmdGit += Style.DIM + "Imports issues from GitHub" + Style.RESET_ALL
+    cmdGit += (
+        Style.DIM + "Imports issues and pull requests from GitHub" + Style.RESET_ALL
+    )
 
     cmdGit += "\n" + spaces + Fore.RED + Style.BRIGHT + "-r " + Style.RESET_ALL
     cmdGit += Style.DIM + "public repo, string [user/repo]." + Style.RESET_ALL
@@ -69,8 +71,8 @@ def help() -> str:
     cmdGit += "\n" + spaces + Style.BRIGHT + "-u " + Style.RESET_ALL
     cmdGit += Style.DIM + "user, string." + Style.RESET_ALL
 
-    cmdGit += "\n" + spaces + Style.BRIGHT + "--all " + Style.RESET_ALL
-    cmdGit += Style.DIM + "Imports every issue." + Style.RESET_ALL
+    cmdGit += "\n" + spaces + Style.BRIGHT + "--pulls " + Style.RESET_ALL
+    cmdGit += Style.DIM + "Imports pull requests instead of issues." + Style.RESET_ALL
 
     # Full help.
     entries: list[str] = [introduction, cmd, cmdNew, cmdDelete, cmdToggle, cmdClear]

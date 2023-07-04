@@ -2,6 +2,10 @@ from datetime import datetime
 
 
 def valiDate(date: str, string: str = "%Y-%m-%d") -> bool:
+    """
+    Validate a date.
+    """
+
     try:
         if date != datetime.strptime(date, string).strftime(string):
             raise ValueError

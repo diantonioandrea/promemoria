@@ -1,42 +1,48 @@
-# Imports Issues from a specific repo as reminders.
+# Imports Contents from a specific repo as reminders.
 
 import requests
 from .reminders import reminder
 from .utilities import parser
 
 
-def gitIssues(prompt: list[str]) -> tuple[bool, list[reminder]]:
+def gitContents(prompt: list[str]) -> tuple[bool, list[reminder]]:
     """
-    Returns a list of issues from a GitHub repo as reminders.
+    Returns a list of contents from a GitHub repo as reminders.
     """
 
     _, sdOpts, ddOpts = parser(prompt)
 
-    if "r" not in sdOpts or ("u" not in sdOpts and "all" not in ddOpts):
+    if "r" not in sdOpts:
         return False, []
 
     try:
-        url: str = "https://api.github.com/repos/{}/issues"
-        url = url.format(sdOpts["r"])
+        url: str = "https://api.github.com/repos/{}/{}"
+
+        if "pulls" in ddOpts:
+            url = url.format(sdOpts["r"], "pulls")
+
+        else:
+            url = url.format(sdOpts["r"], "issues")
 
     except:  # This should be avoided.
         return False, []
 
-    issues: dict = requests.get(url).json()
+    contents: dict = requests.get(url).json()
     reminders: list[reminder] = []
 
-    for issue in issues:
-        gitIssue: dict[str, str] = {}
-        gitIssue["title"] = issue["title"]
-        gitIssue["description"] = issue["url"]
+    for content in contents:
+        gitContent: dict[str, str] = {}
+        gitContent["title"] = content["title"]
+        gitContent["description"] = content["url"]
 
-        if "all" in ddOpts:
-            reminders.append(reminder(gitIssue))
+        if "u" not in sdOpts:
+            reminders.append(reminder(gitContent, True))
 
         # Checks assignee.
         else:
-            for assignee in issue["assignees"]:
+            for assignee in content["assignees"]:
                 if assignee["login"] == sdOpts["u"]:
-                    reminders.append(reminder(gitIssue))
+                    reminders.append(reminder(gitContent, True))
+                    break
 
     return True, reminders

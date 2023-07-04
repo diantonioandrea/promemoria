@@ -6,7 +6,7 @@ from .help import help
 from .files import getReminders, saveReminders
 from .reminders import reminder
 from .utilities import parser
-from .git import gitIssues
+from .git import gitContents
 
 # Colorama's initialization.
 init()
@@ -51,24 +51,30 @@ def main() -> None:
 
     # GitHub integration.
     elif "gh" in instructions:
-        status, issues = gitIssues(sys.argv)
+        status, gits = gitContents(sys.argv)
 
         if status:
             titles = [rem.title for rem in reminders]
 
             # Try to avoid duplicates.
-            issues = [issue for issue in issues if issue.title not in titles]
+            gits = [git for git in gits if git.title not in titles]
 
-            reminders += issues
+            reminders += gits
 
-            message: str = "Imported {} issue(s).".format(len(issues))
-            message += "\n" + "_" * len(message)
+            msg: str = "Imported {} {}(s)."
+            msg = msg.format(len(gits), "issue" if "pulls" not in ddOpts else "pull")
+            msg += "\n" + "_" * len(msg)
+
+            print(msg)
+
+            for git in gits:
+                print("\n" + str(git))
 
         else:
-            message: str = "No issue imported."
-            message += "\n" + "_" * len(message)
+            msg: str = "Nothing imported."
+            msg += "\n" + "_" * len(msg)
 
-        print(message)
+            print(msg)
 
     # Delete all reminders.
     elif "clear" in instructions:
@@ -82,10 +88,10 @@ def main() -> None:
             print(Fore.RED + "Syntax error." + Style.RESET_ALL)
             return -1
 
-        message = "You have deleted a reminder."
+        msg = "You have deleted a reminder."
 
-        print(message)
-        print("-" * len(message))
+        print(msg)
+        print("-" * len(msg))
 
         print("\n" + str(reminders.pop(index)))
 
@@ -95,20 +101,22 @@ def main() -> None:
             print(Fore.RED + "Syntax error." + Style.RESET_ALL)
             return -1
 
-        message = "You toggled a reminder."
+        msg = "You toggled a reminder."
 
-        print(message)
-        print("-" * len(message))
+        print(msg)
+        print("-" * len(msg))
 
         reminders[index].toggle()
         print("\n" + str(reminders[index]))
 
     # No reminders.
     elif not len(reminders):
-        hint = Style.BRIGHT + "promemoria new -t 'TITLE' ..." + Style.RESET_ALL
+        hintNew = Style.BRIGHT + "promemoria new -t 'TITLE' ..." + Style.RESET_ALL
+        hintGit = Style.BRIGHT + "promemoria gh -r 'REPO' ..." + Style.RESET_ALL
 
-        print("You have no reminders.")
-        print("Try creating one using " + hint)
+        print("You have no reminders.\n")
+        print("Try creating one using " + hintNew)
+        print("or import one using " + hintGit)
 
     # Shows reminders by default.
     else:
@@ -121,10 +129,10 @@ def main() -> None:
 
         # Print reminders, if any.
         if len(printable):
-            message: str = "You have {} reminder(s).".format(len(printable))
+            msg: str = "You have {} reminder(s).".format(len(printable))
 
-            print(message)
-            print("-" * len(message))
+            print(msg)
+            print("-" * len(msg))
 
             # Prints the list of reminders.
             for rem in printable:
@@ -137,10 +145,10 @@ def main() -> None:
         if "all" in ddOpts:
             # Prints the number of completed reminders.
             completed: int = [rem.dismissed for rem in reminders].count(True)
-            message: str = "{} completed.".format(completed)
+            msg: str = "{} completed.".format(completed)
 
-            print("\n" + "-" * len(message))
-            print(message)
+            print("\n" + "-" * len(msg))
+            print(msg)
 
     # Saves reminders.
     saveReminders(reminders)
