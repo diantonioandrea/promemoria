@@ -18,6 +18,11 @@ Intuitive Python based tool to create reminders in the shell.
 
 **promemoria** is a Python based tool to help you stay organized and on top of your tasks! Quickly *create reminders in the shell* with the ability to *set a title, description, priority and date* to make sure you never forget anything.
 
+## Main features
+
+- Create and manage reminders directly from the shell.
+- Import the latest *Issues* and *Pull Requests* as reminders from a public GitHub repository. ![New feature](https://img.shields.io/badge/new-green)
+
 ## Installation
 
 **promemoria** can be installed from [PyPI](https://pypi.org) by:
@@ -43,7 +48,7 @@ These commands can be easily retrieved at any moment by issuing `promemoria help
 Available commands.
 -------------------
 
-promemoria Shows the list of active reminders
+promemoria Shows the list of active reminders.
     --all Shows every reminder.
 
 promemoria new Creates a new reminder
@@ -60,6 +65,14 @@ promemoria toggle Toggles the specified reminder
     -i index, integer.
 
 promemoria clear Deletes every reminder
+
+GitHub integration.
+-------------------
+
+promemoria gh Imports issues and pull requests from GitHub
+    -r public repo, string [user/repo].
+    -u user, string.
+    --pulls Imports pull requests instead of issues.
 ```
 
 ## Examples
@@ -101,15 +114,35 @@ Reminder created succesfully!
   2023-12-25
 ```
 
+### Import from a GitHub repository
+
+```
+promemoria gh -r "python/cpython" -u "sobolevn"
+```
+
+which results[^4] in:
+
+[^4]: An example from the official [Python](https://github.com/python/cpython) repository.
+
+```
+[promemoria]
+
+Imported 1 issue(s).
+____________________
+
+◯ New warning: "'_Py_IsInterpreterFinalizing' undefined; assuming extern returning in" !!
+  https://api.github.com/repos/python/cpython/issues/106406
+```
+
 ### Toggling a reminder
 
 ```
 promemoria toggle -i 1
 ````
 
-which results[^2][^4] in:
+which results[^2][^5] in:
 
-[^4]: The mark changes and the title gets dimmed.
+[^5]: The mark changes and the title gets dimmed.
 
 ```
 [promemoria]

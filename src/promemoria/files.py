@@ -1,10 +1,10 @@
 # Handles promemoria files.
 
+import pickle
 from os import makedirs
 from os.path import expanduser
 
 from .reminders import reminder
-import pickle
 
 
 def getReminders() -> list[reminder]:
@@ -33,6 +33,9 @@ def getReminders() -> list[reminder]:
         reminders: list[reminder] = []
 
         saveReminders(reminders)
+
+    except:
+        reminders = []
 
     # Runs a check on reminders.
     for rem in reminders:

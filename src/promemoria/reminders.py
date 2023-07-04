@@ -1,84 +1,101 @@
 from __future__ import annotations
 
 from datetime import datetime
+
 from colorama import Fore, Style
 
-from .utilities import parser, valiDate
+from .utilities import parser, valiDate, msg
 
 
 class reminder:
-    def __init__(self: reminder, prompt: list[str], old: reminder = None):
-        _, sdOpts, _ = parser(prompt)
+    def __init__(self: reminder, prompt: "list, dict", git: bool = False):
+        if git:
+            # Create a reminder from a git issue or pull request.
+            # prompt: dict[str, str]
 
-        try:
-            # Checks title.
-            assert "t" in sdOpts
+            self.title = prompt["title"]
+            self.description = prompt["description"]
 
-            # Title.
-            self.title: str = sdOpts["t"]
-
-            # Checks priority.
-            if "p" in sdOpts:
-                assert isinstance(sdOpts["p"], int)
-                assert 1 <= sdOpts["p"] <= 3
-
-                # Priority.
-                self.priority: int = sdOpts["p"]
-
-            else:
-                self.priority = 0
-
-            # Checks description.
-            if "de" in sdOpts:
-                assert isinstance(sdOpts["de"], str)
-
-                # Description.
-                self.description: str = sdOpts["de"]
-
-            else:
-                self.description = ""
-
-            # Checks date.
-            if "da" in sdOpts:
-                assert isinstance(sdOpts["da"], str)
-                assert valiDate(sdOpts["da"])
-
-                # Date.
-                self.date: str = sdOpts["da"]
-
-            else:
-                self.date = ""
-
-            # Checks time.
-            if "ti" in sdOpts:
-                assert isinstance(sdOpts["ti"], str)
-                assert valiDate(sdOpts["ti"], "%H:%M")
-
-                if not self.date:
-                    self.date = datetime.now().strftime("%Y-%m-%d")
-
-                # Time.
-                self.time: str = sdOpts["ti"]
-
-            else:
-                self.time = ""
+            self.priority = 2  # Default priority.
+            self.date = ""
+            self.time = ""
 
             # Flags.
-            self.expired = False
+            self.expired: bool = False
             self.dismissed: bool = False
-            self.confirmation: bool = True
 
-            # Post-creation check.
-            self.check()
+        else:
+            try:
+                # Create a reminder 'from scratch'.
+                # prompt: list[str]
 
-            message = "Reminder created succesfully!"
+                _, sdOpts, _ = parser(prompt)
 
-        except AssertionError:
-            message = "Reminder creation failed!"
-            self.confirmation: bool = False
+                # Checks title.
+                assert "t" in sdOpts
 
-        print(message)
-        print("-" * len(message))
+                # Title.
+                self.title: str = sdOpts["t"]
+
+                # Checks priority.
+                if "p" in sdOpts:
+                    assert isinstance(sdOpts["p"], int)
+                    assert 1 <= sdOpts["p"] <= 3
+
+                    # Priority.
+                    self.priority: int = sdOpts["p"]
+
+                else:
+                    self.priority = 0
+
+                # Checks description.
+                if "de" in sdOpts:
+                    assert isinstance(sdOpts["de"], str)
+
+                    # Description.
+                    self.description: str = sdOpts["de"]
+
+                else:
+                    self.description = ""
+
+                # Checks date.
+                if "da" in sdOpts:
+                    assert isinstance(sdOpts["da"], str)
+                    assert valiDate(sdOpts["da"])
+
+                    # Date.
+                    self.date: str = sdOpts["da"]
+
+                else:
+                    self.date = ""
+
+                # Checks time.
+                if "ti" in sdOpts:
+                    assert isinstance(sdOpts["ti"], str)
+                    assert valiDate(sdOpts["ti"], "%H:%M")
+
+                    if not self.date:
+                        self.date = datetime.now().strftime("%Y-%m-%d")
+
+                    # Time.
+                    self.time: str = sdOpts["ti"]
+
+                else:
+                    self.time = ""
+
+                # Flags.
+                self.expired: bool = False
+                self.dismissed: bool = False
+                self.confirmation: bool = True
+
+                # Post-creation check.
+                self.check()
+
+                msg("Reminder created succesfully.")
+
+            except AssertionError:
+                msg("Reminder creation failed.", error=True)
+                self.confirmation: bool = False
 
     def __str__(self: reminder, index: int = -1) -> str:
         # Mark.

@@ -1,7 +1,31 @@
 from datetime import datetime
 
+from colorama import Fore
+
+
+def msg(string: str, error: bool = False, reversed: bool = False) -> None:
+    """
+    Pretty messages.
+    """
+
+    if error:
+        output = Fore.RED + string + Fore.RESET
+
+    else:
+        output = string
+
+    if not reversed:
+        print(output + "\n" + "-" * len(string))
+
+    else:
+        print("-" * len(string) + "\n" + output)
+
 
 def valiDate(date: str, string: str = "%Y-%m-%d") -> bool:
+    """
+    Validate a date.
+    """
+
     try:
         if date != datetime.strptime(date, string).strftime(string):
             raise ValueError
