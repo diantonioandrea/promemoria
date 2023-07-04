@@ -120,7 +120,7 @@ Reminder created succesfully!
 promemoria gh -r "python/cpython" -u "sobolevn"
 ```
 
-which results in[^4]:
+which results[^4] in:
 
 [^4]: An example from the official [Python](https://github.com/python/cpython) repository.
 
