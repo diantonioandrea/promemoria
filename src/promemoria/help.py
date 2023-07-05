@@ -3,7 +3,7 @@
 from colorama import Fore, Style
 
 
-def help() -> str:
+def helpMain() -> str:
     """
     Returns the help string.
     """

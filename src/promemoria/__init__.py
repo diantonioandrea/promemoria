@@ -2,7 +2,7 @@ import sys
 
 from colorama import Fore, Style, init
 
-from .help import help
+from .help import helpMain, helpChecker
 from .files import getReminders, saveReminders
 from .reminders import reminder
 from .utilities import parser, msg
@@ -38,7 +38,7 @@ def main() -> None:
 
     # Helper.
     if "help" in instructions:
-        print(help())
+        print(helpMain())
 
     # Creates a new reminder.
     elif "new" in instructions:
@@ -138,3 +138,26 @@ def main() -> None:
 
     # Saves reminders.
     saveReminders(reminders)
+
+
+# Defines promemoria's checker which, when enabled, checks
+# for expired reminders while opening the shell.
+def checker() -> None:
+    # Obtains instructions and options.
+    instructions, _, _ = parser(sys.argv)
+
+    # Helper.
+    if "help" in instructions:
+        pass
+
+    # Enables checker.
+    elif "enable" in instructions:
+        pass
+
+    # Disables checker.
+    elif "disable" in instructions:
+        pass
+
+    # Shows expired reminders.
+    else:
+        pass
