@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "promemoria"
-version = "1.2.0"
+version = "1.3.0"
 authors = [
   { name="Andrea Di Antonio", email="mail@diantonioandrea.com" },
 ]
@@ -20,6 +20,7 @@ classifiers = [
 
 [project.scripts]
 promemoria = "promemoria:main"
+promemoria-check = "promemoria:checker"
 
 [project.urls]
 "Homepage" = "https://github.com/diantonioandrea/promemoria"
