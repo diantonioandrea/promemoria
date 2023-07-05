@@ -144,8 +144,6 @@ def main() -> None:
 
 # Defines promemoria's checker which, when enabled, checks
 # for expired reminders while opening the shell.
-
-
 # Linux and macOS only.
 # bash and zsh only.
 def checker() -> None:
