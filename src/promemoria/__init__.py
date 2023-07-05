@@ -1,12 +1,14 @@
+from os import environ
 import sys
+from platform import system
 
-from colorama import Fore, Style, init
+from colorama import Style, init
 
-from .help import helpMain, helpChecker
 from .files import getReminders, saveReminders
-from .reminders import reminder
-from .utilities import parser, msg
 from .git import gitContents
+from .help import helpChecker, helpMain
+from .reminders import reminder
+from .utilities import msg, parser
 
 # Colorama's initialization.
 init()
@@ -15,6 +17,9 @@ init()
 # Defines promemoria's main function.
 # This makes possible calling promemoria as a script.
 def main() -> None:
+    # Application name.
+    print(Style.BRIGHT + "[promemoria]" + Style.RESET_ALL + "\n")
+
     # Obtains instructions and options.
     instructions, sdOpts, ddOpts = parser(sys.argv)
     index: int = -1
@@ -32,9 +37,6 @@ def main() -> None:
 
         except AssertionError:
             pass
-
-    # Application name.
-    print(Style.BRIGHT + "[promemoria]" + Style.RESET_ALL + "\n")
 
     # Helper.
     if "help" in instructions:
@@ -142,22 +144,100 @@ def main() -> None:
 
 # Defines promemoria's checker which, when enabled, checks
 # for expired reminders while opening the shell.
+
+
+# Linux and macOS only.
+# bash and zsh only.
 def checker() -> None:
     # Obtains instructions and options.
     instructions, _, _ = parser(sys.argv)
 
+    # Gets reminders.
+    reminders: list[reminder] = getReminders()
+    expired = [rem for rem in reminders if rem.expired and not rem.dismissed]
+
+    # Checks OS.
+    if system() not in ["Linux", "Darwin"]:
+        msg("Unsupported OS", error=True)
+        return
+
+    # Check shell.
+    if "zsh" in environ["SHELL"]:
+        shellConfig = environ["HOME"] + "/.zshrc"
+
+    elif "bash" in environ["SHELL"]:
+        shellConfig = environ["HOME"] + "/.bashrc"
+
+    else:
+        msg("Unsupported shell", error=True)
+        return
+
+    # Instruction.
+    inst = "promemoria-check"
+
     # Helper.
     if "help" in instructions:
-        pass
+        # Application name.
+        print(Style.BRIGHT + "[promemoria-check]" + Style.RESET_ALL + "\n")
+
+        print(helpChecker())
 
     # Enables checker.
     elif "enable" in instructions:
-        pass
+        # Application name.
+        print(Style.BRIGHT + "[promemoria-check]" + Style.RESET_ALL + "\n")
+
+        shellFile = open(shellConfig, "r")
+        lines = shellFile.readlines()
+        shellFile.close()
+
+        # Rewrites the shell configuration including the
+        # promemoria-check instruction.
+        if not any([inst in line for line in lines]):
+            shellFile = open(shellConfig, "w")
+            shellFile.writelines(lines + [inst + "\n"])
+            shellFile.close()
+
+            msg("Promemoria-check enabled.")
+
+        else:
+            msg("Promemoria-check already enabled.")
 
     # Disables checker.
     elif "disable" in instructions:
-        pass
+        # Application name.
+        print(Style.BRIGHT + "[promemoria-check]" + Style.RESET_ALL + "\n")
+
+        shellFile = open(shellConfig, "r")
+        lines = shellFile.readlines()
+        shellFile.close()
+
+        # Rewrites the shell configuration without the
+        # promemoria-check instruction.
+        if any([inst in line for line in lines]):
+            indexes = [j for j in range(len(lines)) if inst in lines[j]]
+            lines = [lines[j] for j in range(len(lines)) if j not in indexes]
+
+            shellFile = open(shellConfig, "w")
+            shellFile.writelines(lines)
+            shellFile.close()
+
+            msg("Promemoria-check disabled.")
+
+        else:
+            msg("Promemoria-check already disabled.")
 
     # Shows expired reminders.
     else:
-        pass
+        # No output on no expired reminders.
+        if expired:
+            # Application name.
+            print(Style.BRIGHT + "[promemoria-check]" + Style.RESET_ALL + "\n")
+
+        else:
+            return
+
+        msg("You have {} expired reminder(s)".format(len(expired)))
+
+        for expr in expired:
+            print("\n" + str(expr))
