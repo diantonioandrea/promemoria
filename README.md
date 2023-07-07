@@ -22,6 +22,7 @@ Intuitive Python based tool to create reminders in the shell.
 
 - Create and manage reminders directly from the shell.
 - Import the latest *Issues* and *Pull Requests* as reminders from a public GitHub repository. ![New feature](https://img.shields.io/badge/new-green)
+- Automatically checks for expired reminders when opening a new shell. ![New feature](https://img.shields.io/badge/new-green)
 
 ## Installation
 
@@ -75,6 +76,16 @@ promemoria gh Imports issues and pull requests from GitHub
     --pulls Imports pull requests instead of issues.
 ```
 
+## Expired reminders check
+
+The automatic check can be enabled by issuing the following command[^4]:
+
+[^4]: Linux and macOS only, bash and zsh only.
+
+```
+promemoria-check enable
+```
+
 ## Examples
 
 ### Quickly check your reminders
@@ -120,9 +131,9 @@ Reminder created succesfully!
 promemoria gh -r "python/cpython" -u "sobolevn"
 ```
 
-which results[^4] in:
+which results[^5] in:
 
-[^4]: An example from the official [Python](https://github.com/python/cpython) repository.
+[^5]: An example from the official [Python](https://github.com/python/cpython) repository.
 
 ```
 [promemoria]
@@ -140,9 +151,9 @@ ____________________
 promemoria toggle -i 1
 ````
 
-which results[^2][^5] in:
+which results[^2][^6] in:
 
-[^5]: The mark changes and the title gets dimmed.
+[^6]: The mark changes and the title gets dimmed.
 
 ```
 [promemoria]

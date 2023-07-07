@@ -3,7 +3,7 @@
 from colorama import Fore, Style
 
 
-def help() -> str:
+def helpMain() -> str:
     """
     Returns the help string.
     """
@@ -79,5 +79,31 @@ def help() -> str:
 
     # GitHub integration.
     entries += [introductionGit, cmdGit]
+
+    return "\n\n".join(entries)
+
+
+def helpChecker() -> str:
+    """
+    Returns the help string.
+    """
+    spaces = " " * 4
+    introduction: str = "Base commands."
+    introduction += "\n" + "-" * len(introduction)
+
+    # Empty command (auto).
+    cmd: str = Style.BRIGHT + "promemoria-check " + Style.RESET_ALL
+    cmd += Style.DIM + "Checks for expired reminders." + Style.RESET_ALL
+
+    # Enable command.
+    cmdEnable: str = Style.BRIGHT + "promemoria-check enable " + Style.RESET_ALL
+    cmdEnable += Style.DIM + "Enables the auto-checker." + Style.RESET_ALL
+
+    # Disable command.
+    cmdDisable: str = Style.BRIGHT + "promemoria-check disable " + Style.RESET_ALL
+    cmdDisable += Style.DIM + "Disables the auto-checker." + Style.RESET_ALL
+
+    # Full help.
+    entries: list[str] = [introduction, cmd, cmdEnable, cmdDisable]
 
     return "\n\n".join(entries)
