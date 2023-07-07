@@ -156,7 +156,7 @@ def checker() -> None:
 
     # Checks OS.
     if system() not in ["Linux", "Darwin"]:
-        msg("Unsupported OS", error=True)
+        msg("Unsupported OS ({})".format(system()), error=True)
         return
 
     # Check shell.
@@ -167,11 +167,12 @@ def checker() -> None:
         shellConfig = environ["HOME"] + "/.bashrc"
 
     else:
-        msg("Unsupported shell", error=True)
+        msg("Unsupported shell ({})".format(environ["SHELL"]), error=True)
         return
 
     # Instruction.
-    inst = "promemoria-check"
+    # Ignores errors.
+    inst = "promemoria-check || :"
 
     # Helper.
     if "help" in instructions:
